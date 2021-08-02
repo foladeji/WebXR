@@ -1,0 +1,7 @@
+{
+    "editor.fontSize": 12,
+    "workbench.colorTheme": "Atom One Dark",
+    "workbench.preferredDarkColorTheme": "Tomorrow Night Blue",
+    "workbench.preferredHighContrastColorTheme": "Atom One Dark",
+    "workbench.iconTheme": "vs-minimal"
+}
