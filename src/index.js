@@ -501,7 +501,7 @@ class App {
             self.setupXR();
         });
 
-        //CARS
+        //CARS1
         loader.load('models/glbModels/cars1.glb', function (gltf) {
             const planters = gltf.scene;
             self.scene.add(planters);
@@ -512,8 +512,8 @@ class App {
             self.setupXR();
         });
                 
-         //CARS
-         loader.load('models/glbModels/cars11.glb', function (gltf) {
+         //CARS2
+         loader.load('models/glbModels/cars2.glb', function (gltf) {
             const planters = gltf.scene;
             self.scene.add(planters);
             self.planters = planters;
@@ -522,19 +522,8 @@ class App {
                                 
             self.setupXR();
         });
-                
-             //CARS
-             loader.load('models/glbModels/cars2.glb', function (gltf) {
-                const planters = gltf.scene;
-                self.scene.add(planters);
-                self.planters = planters;
-                                    
-                self.loadingBar.visible = false;
-                                    
-                self.setupXR();
-            });
                
-                 //CARS
+        //CARS3
          loader.load('models/glbModels/cars3.glb', function (gltf) {
             const planters = gltf.scene;
             self.scene.add(planters);
@@ -544,27 +533,28 @@ class App {
                                 
             self.setupXR();
         });
-             //CARS
-             loader.load('models/glbModels/cars4.glb', function (gltf) {
-                const planters = gltf.scene;
-                self.scene.add(planters);
-                self.planters = planters;
+
+        //CARS4
+        loader.load('models/glbModels/cars4.glb', function (gltf) {
+            const planters = gltf.scene;
+            self.scene.add(planters);
+            self.planters = planters;
                                     
-                self.loadingBar.visible = false;
+            self.loadingBar.visible = false;
                                     
-                self.setupXR();
-            });
+            self.setupXR();
+        });
                
-             //CARS
-             loader.load('models/glbModels/cars5.glb', function (gltf) {
-                const planters = gltf.scene;
-                self.scene.add(planters);
-                self.planters = planters;
+        //CARS5
+        loader.load('models/glbModels/cars5.glb', function (gltf) {
+            const planters = gltf.scene;
+            self.scene.add(planters);
+            self.planters = planters;
                                     
-                self.loadingBar.visible = false;
+            self.loadingBar.visible = false;
                                     
-                self.setupXR();
-            });
+            self.setupXR();
+        });
                    
     }
 
