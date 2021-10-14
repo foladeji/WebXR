@@ -31,16 +31,73 @@ import {
 
 class App {
 
+   
+
     constructor() {
         const container = document.createElement('div');
         document.body.appendChild(container);
 
         // CAMERA
-        this.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 5000000);
-        this.camera.position.set(0, 5, 0);
+        this.camera = new THREE.PerspectiveCamera(55, window.innerWidth / window.innerHeight, 0.01, 500000);
+        // this.camera.position.set(0, 5, 0);
+    
+        this.position = [
+            //MAIN GALLERY
+            new THREE.Vector3(2, 3.5, 17), 
+            new THREE.Vector3(2, 3.5, -3), 
+            new THREE.Vector3(-17,3.5,-3), 
+            new THREE.Vector3(-17,3.5,17), 
+
+            //ENTRY VESTIBULE
+            new THREE.Vector3(5.5,3.5,28),
+            new THREE.Vector3(-20,3.5,-13),
+
+            //STAFF OFFICE
+            new THREE.Vector3(19,3.5,17),
+
+            //PUBLIC RESTROOMS
+            new THREE.Vector3(1,3.5,-25),
+            new THREE.Vector3(25,3.5,2),
+
+            //CUSTODIAN;S CLOSET W/ SINK
+            new THREE.Vector3(4,3.5,-12),
+
+            //GALLERY STORAGE
+            new THREE.Vector3(19,3.5,8.5),
+
+            //GENERAL FACILITY STORAGE
+            new THREE.Vector3(-6,3.5,-13),
+
+            //MECHNICAL ROOM
+            new THREE.Vector3(16,3.5,-12),
+
+            //TERRACE 1
+            new THREE.Vector3(-70,12,60),
+
+            //TERRACE 2
+            new THREE.Vector3(-20,12,-95),
+
+            //JAPAN HOUSE
+            new THREE.Vector3(-520,12,85),
+
+            //SOUTH ENTRY
+            new THREE.Vector3(5,4.5,55),
+
+            //NORTH ENTRY
+            new THREE.Vector3(-20,4.5,-30),
+        
+        ]
+        this.currentPosition = 0
+        this.camera.position.copy (this.position[this.currentPosition])
+        // this.camera.position.set(this.position[this.currentPosition].x,this.position[this.currentPosition].y,this.position[this.currentPosition].z )
+        // this.camera.position.set(this.position[this.currentPosition][0],
+        //     this.position[this.currentPosition][1], 
+        //     this.position[this.currentPosition][2]);
+
+        console.log(this.camera.position)
 
         this.dolly = new THREE.Object3D();
-        this.dolly.position.set(0, 1.6, 10);
+        this.dolly.position.set(-20 , 4.5, -30);
         this.dolly.add(this.camera);
         this.dummyCam = new THREE.Object3D();
         this.camera.add(this.dummyCam);
@@ -51,7 +108,6 @@ class App {
         this.scene = new THREE.Scene();
         this.scene.add(this.dolly)
         this.scene.background = new THREE.Color(0xaaaaaaa);
-
 
         //LIGHTING
         const ambient = new THREE.HemisphereLight(0xFFFFFF, 0xAAAAAA, 0.8);
@@ -167,8 +223,36 @@ class App {
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
+        window.addEventListener('click', this.changePosition.bind(this));
+        // window.addEventListener('touch', this.changePosition.bind(this));
     }
 
+       
+    changePosition(){
+        
+        this.currentPosition += 1
+        if (this.renderer.xr.enabled){
+            this.dolly.position.set(0, 1.6, 0);
+            if (this.currentPosition < this.position.length){
+                this.dolly.position.copy (this.position[this.currentPosition])
+
+            }else{
+                this.currentPosition = 0;
+                this.dolly.position.copy (this.position[this.currentPosition])
+            }
+        }else{
+            if (this.currentPosition < this.position.length){
+                this.camera.position.copy (this.position[this.currentPosition])
+           
+            }else{
+                this.currentPosition = 0;
+                this.camera.position.copy (this.position[this.currentPosition])
+            }
+        }
+        
+        console.log(this.camera.position)
+
+    }
 
     resize() {
         this.camera.aspect = window.innerWidth / window.innerHeight;
@@ -222,7 +306,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -234,7 +318,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -246,7 +330,7 @@ class App {
     
                 self.loadingBar.visible = false;
     
-                self.setupXR();
+                // self.setupXR();
             });
 
 
@@ -259,7 +343,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -271,7 +355,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //MULLIONS
@@ -282,7 +366,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //GLASS
@@ -293,7 +377,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -305,7 +389,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
                 //ROAD
@@ -316,7 +400,7 @@ class App {
         
                     self.loadingBar.visible = false;
         
-                    self.setupXR();
+                    // self.setupXR();
                 });
 
 
@@ -328,7 +412,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -340,7 +424,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //TERRACE SIDINGS
@@ -351,7 +435,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //PLANTERS
@@ -362,7 +446,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //BENCHES
@@ -373,7 +457,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //LAMPRODS
@@ -384,7 +468,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //LAMPCASING
@@ -395,7 +479,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //SEATING
@@ -406,7 +490,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //DOOR
@@ -417,7 +501,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //DOORHANDLES
@@ -428,7 +512,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //DESK
@@ -439,7 +523,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         // //TREELEAVES
@@ -462,7 +546,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
         
         //TREETRUNKS
@@ -474,7 +558,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
 
@@ -487,7 +571,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
         
         //SHRUBS
@@ -498,7 +582,7 @@ class App {
 
             self.loadingBar.visible = false;
 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //CARS1
@@ -509,7 +593,7 @@ class App {
             
             self.loadingBar.visible = false;
             
-            self.setupXR();
+            // self.setupXR();
         });
                 
          //CARS2
@@ -520,7 +604,7 @@ class App {
                                 
             self.loadingBar.visible = false;
                                 
-            self.setupXR();
+            // self.setupXR();
         });
                
         //CARS3
@@ -531,7 +615,7 @@ class App {
                                 
             self.loadingBar.visible = false;
                                 
-            self.setupXR();
+            // self.setupXR();
         });
 
         //CARS4
@@ -542,7 +626,7 @@ class App {
                                     
             self.loadingBar.visible = false;
                                     
-            self.setupXR();
+            // self.setupXR();
         });
                
         //CARS5
@@ -553,7 +637,7 @@ class App {
                                     
             self.loadingBar.visible = false;
                                     
-            self.setupXR();
+            // self.setupXR();
         });
                    
     }
