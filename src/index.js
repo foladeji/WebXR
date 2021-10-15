@@ -226,7 +226,7 @@ class App {
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
-        window.addEventListener('tap', this.changePosition.bind(this));
+        window.addEventListener('select', this.changePosition.bind(this));
         // window.addEventListener('touch', this.changePosition.bind(this));
     
     }
@@ -657,71 +657,15 @@ class App {
 
         const button = new VRButton(this.renderer);
 
-
         const self = this;
 
         function onSelectStart(event) {
-
             this.userData.selectPressed = true;
-
         }
 
         function onSelectEnd(event) {
-
             this.userData.selectPressed = false;
-
         }
-
-
-
-        //        function onSessionStart() {
-        //            // create a global audio source
-        ////            if (self.speech === undefined) {
-        ////                const atmos = new THREE.Audio(self.listener);
-        ////
-        ////                // load a sound and set it as the Audio object's buffer
-        ////                const audioLoader = new THREE.AudioLoader();
-        ////                audioLoader.load('audio/atmos.mp3', (buffer) => {
-        ////                    atmos.setBuffer(buffer);
-        ////                    atmos.setLoop(true);
-        ////                    atmos.setVolume(0.5);
-        ////                    atmos.play();
-        ////                });
-        ////
-        ////                self.atmos = atmos;
-        ////
-        ////                self.speech = new THREE.Audio(self.listener);
-        ////            } else {
-        ////                self.atmos.play();
-        ////            }
-        ////            self.playSound('intro');
-        //        }
-        //
-        //        function onSessionEnd() {
-        ////            if (self.speech && self.speech.isPlaying) self.speech.stop();
-        ////            if (self.atmos && self.atmos.isPlaying) self.atmos.pause();
-        //        }
-
-
-
-        //        function onSelect(event) {
-        //
-        //            if (self.ui !== undefined) self.ui.select();
-        //
-        //        }
-
-
-
-
-//        function onConnected(event) {
-//            clearTimeout(timeoutId);
-//        }
-//
-//        function connectionTimeout() {
-//            self.useGaze = true;
-//            self.gazeController = new GazeController(self.scene, self.dummyCam);
-//        }
-//        const timeoutId = setTimeout(connectionTimeout, 2000);
 
         this.controllers = this.buildControllers(this.dolly);
 
@@ -729,16 +673,10 @@ class App {
             controller.addEventListener('selectstart', onSelectStart);
             controller.addEventListener('selectend', onSelectEnd);
 //            controller.addEventListener('connected', onConnected);
-
-            this.gestures = new ControllerGestures (this.renderer);
-
-            this.gestures.addEventListener ('tap', (ev)=> {
-                console.log(tap)
-            })
         });
 
-
         this.renderer.setAnimationLoop(this.render.bind(this));
+        
     }
 
     buildControllers(parent = this.scene) {
