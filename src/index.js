@@ -675,6 +675,11 @@ class App {
 //            controller.addEventListener('connected', onConnected);
         });
 
+        this._xrSession.addEventListener('select', (ev) => {
+            this._handleSelect(ev.inputSource, ev.frame, this._xrReferenceSpace);
+            this.changePosition.bind(this);
+         });
+
         this.renderer.setAnimationLoop(this.render.bind(this));
         
     }
