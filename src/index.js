@@ -27,6 +27,9 @@ import {
 import {
     GazeController
 } from '../libraries/GazeController.js'
+import {
+    ControllerGestures
+} from '../libraries/ControllerGestures.js';
 
 
 class App {
@@ -727,6 +730,11 @@ class App {
             controller.addEventListener('selectend', onSelectEnd);
 //            controller.addEventListener('connected', onConnected);
 
+            this.gestures = new ControllerGestures (this.renderer);
+
+            this.gestures.addEventListener ('tap', (ev)=> {
+                console.log(tap)
+            })
         });
 
 
