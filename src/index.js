@@ -144,9 +144,6 @@ class App {
         this.scene.add(ambientLight);
         this.scene.add(hemisphereLight);
 
-
-
-
         // SKYDOME
         const vertexShader = document.getElementById('vertexShader').textContent;
         const fragmentShader = document.getElementById('fragmentShader').textContent;
@@ -215,8 +212,6 @@ class App {
 
         const self = this;
 
-
-
         window.addEventListener('resize', this.resize.bind(this));
 
         this.clock = new THREE.Clock();
@@ -226,12 +221,11 @@ class App {
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
-        window.addEventListener('select', this.changePosition.bind(this));
+        window.addEventListener('click', this.changePosition.bind(this));
         // window.addEventListener('touch', this.changePosition.bind(this));
     
     }
 
-       
     changePosition(){
         
         this.currentPosition += 1
@@ -648,39 +642,46 @@ class App {
 
 
 
-
-
-
     //XR FUNCTION
     setupXR() {
-        this.renderer.xr.enabled = true;
 
-        const button = new VRButton(this.renderer);
+        const XR = navigator.xr;
 
-        const self = this;
+if (XR) {
+  XR.requestSession("immersive-vr").then((xrSession) => {
+    xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
+      xrSession.requestAnimationFrame((time, xrFrame) => {
+        let viewer = xrFrame.getViewerPose(xrReferenceSpace);
 
-        function onSelectStart(event) {
-            this.userData.selectPressed = true;
+        gl.bindFramebuffer(xrWebGLLayer.framebuffer);
+
+        for (xrView of viewer.views) {
+          let xrViewport = xrWebGLLayer.getViewport(xrView);
+          gl.viewport(xrViewport.x, xrViewport.y,
+                      xrViewport.width, xrViewport.height);
         }
+      });
+    });
+  });
+} else {
+  /* WebXR is not available */
+}
+        // this.renderer.xr.enabled = true;
 
-        function onSelectEnd(event) {
-            this.userData.selectPressed = false;
-        }
+        // const button = new VRButton(this.renderer);
 
-        this.controllers = this.buildControllers(this.dolly);
+        // const self = this;
 
-        this.controllers.forEach((controller) => {
-            controller.addEventListener('selectstart', onSelectStart);
-            controller.addEventListener('selectend', onSelectEnd);
-//            controller.addEventListener('connected', onConnected);
-        });
+        // function onSelectStart(event) {
+        //     this.userData.selectPressed = true;
+        // }
 
-        this._xrSession.addEventListener('select', (ev) => {
-            this._handleSelect(ev.inputSource, ev.frame, this._xrReferenceSpace);
-            this.changePosition.bind(this);
-         });
+        // function onSelectEnd(event) {
+        //     this.userData.selectPressed = false;
+        // }
 
-        this.renderer.setAnimationLoop(this.render.bind(this));
+     
+        // this.renderer.setAnimationLoop(this.render.bind(this));
         
     }
 
