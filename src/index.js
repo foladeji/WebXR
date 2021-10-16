@@ -642,29 +642,29 @@ class App {
 
     //XR FUNCTION
     setupXR() {
-
-//         const XR = navigator.xr;
-
-// if (XR) {
-//   XR.requestSession("immersive-vr").then((xrSession) => {
-//     xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
-//       xrSession.requestAnimationFrame((time, xrFrame) => {
-//         let viewer = xrFrame.getViewerPose(xrReferenceSpace);
-
-//         gl.bindFramebuffer(xrWebGLLayer.framebuffer);
-
-//         for (xrView of viewer.views) {
-//           let xrViewport = xrWebGLLayer.getViewport(xrView);
-//           gl.viewport(xrViewport.x, xrViewport.y,
-//                       xrViewport.width, xrViewport.height);
-//         }
-//       });
-//     });
-//   });
-// } else {
-//   /* WebXR is not available */
-// }
         this.renderer.xr.enabled = true;
+
+        const XR = this.renderer.xr;
+
+if (XR) {
+  XR.requestSession("immersive-vr").then((xrSession) => {
+    xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
+      xrSession.requestAnimationFrame((time, xrFrame) => {
+        let viewer = xrFrame.getViewerPose(xrReferenceSpace);
+
+        gl.bindFramebuffer(xrWebGLLayer.framebuffer);
+
+        for (xrView of viewer.views) {
+          let xrViewport = xrWebGLLayer.getViewport(xrView);
+          gl.viewport(xrViewport.x, xrViewport.y,
+                      xrViewport.width, xrViewport.height);
+        }
+      });
+    });
+  });
+} else {
+  /* WebXR is not available */
+}
 
         const button = new VRButton(this.renderer);
 
