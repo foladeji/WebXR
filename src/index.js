@@ -644,7 +644,7 @@ class App {
     setupXR() {
         this.renderer.xr.enabled = true;
 
-        const XR = this.renderer.xr;
+        const XR = navigator.xr;
 
 if (XR) {
   XR.requestSession("immersive-vr").then((xrSession) => {
