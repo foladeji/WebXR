@@ -27,9 +27,7 @@ import {
 import {
     GazeController
 } from '../libraries/GazeController.js'
-import {
-    ControllerGestures
-} from '../libraries/ControllerGestures.js';
+
 
 
 class App {
@@ -645,43 +643,43 @@ class App {
     //XR FUNCTION
     setupXR() {
 
-        const XR = navigator.xr;
+//         const XR = navigator.xr;
 
-if (XR) {
-  XR.requestSession("immersive-vr").then((xrSession) => {
-    xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
-      xrSession.requestAnimationFrame((time, xrFrame) => {
-        let viewer = xrFrame.getViewerPose(xrReferenceSpace);
+// if (XR) {
+//   XR.requestSession("immersive-vr").then((xrSession) => {
+//     xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
+//       xrSession.requestAnimationFrame((time, xrFrame) => {
+//         let viewer = xrFrame.getViewerPose(xrReferenceSpace);
 
-        gl.bindFramebuffer(xrWebGLLayer.framebuffer);
+//         gl.bindFramebuffer(xrWebGLLayer.framebuffer);
 
-        for (xrView of viewer.views) {
-          let xrViewport = xrWebGLLayer.getViewport(xrView);
-          gl.viewport(xrViewport.x, xrViewport.y,
-                      xrViewport.width, xrViewport.height);
+//         for (xrView of viewer.views) {
+//           let xrViewport = xrWebGLLayer.getViewport(xrView);
+//           gl.viewport(xrViewport.x, xrViewport.y,
+//                       xrViewport.width, xrViewport.height);
+//         }
+//       });
+//     });
+//   });
+// } else {
+//   /* WebXR is not available */
+// }
+        this.renderer.xr.enabled = true;
+
+        const button = new VRButton(this.renderer);
+
+        const self = this;
+
+        function onSelectStart(event) {
+            this.userData.selectPressed = true;
         }
-      });
-    });
-  });
-} else {
-  /* WebXR is not available */
-}
-        // this.renderer.xr.enabled = true;
 
-        // const button = new VRButton(this.renderer);
-
-        // const self = this;
-
-        // function onSelectStart(event) {
-        //     this.userData.selectPressed = true;
-        // }
-
-        // function onSelectEnd(event) {
-        //     this.userData.selectPressed = false;
-        // }
+        function onSelectEnd(event) {
+            this.userData.selectPressed = false;
+        }
 
      
-        // this.renderer.setAnimationLoop(this.render.bind(this));
+        this.renderer.setAnimationLoop(this.render.bind(this));
         
     }
 
