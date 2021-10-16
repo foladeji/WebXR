@@ -648,6 +648,9 @@ class App {
 
 if (XR) {
   XR.requestSession("immersive-vr").then((xrSession) => {
+
+    xrSession.addEventListener("select", this.changePosition.bind(this) );
+
     xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
       xrSession.requestAnimationFrame((time, xrFrame) => {
         let viewer = xrFrame.getViewerPose(xrReferenceSpace);
