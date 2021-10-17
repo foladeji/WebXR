@@ -644,7 +644,7 @@ class App {
     setupXR() {
         this.renderer.xr.enabled = true;
 
-  session.requestSession("immersive-vr").then((xrSession) => {
+  this.requestSession("immersive-vr").then((xrSession) => {
 console.log ("in request")
     xrSession.addEventListener("select", this.changePosition.bind(this) );
 
