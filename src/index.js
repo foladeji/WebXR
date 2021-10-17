@@ -644,7 +644,7 @@ class App {
     setupXR() {
         this.renderer.xr.enabled = true;
 
-        const XR = navigator.xr;
+        // const XR = navigator.xr;
 
 if (XR) {
     console.log("in xr")
