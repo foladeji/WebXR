@@ -644,10 +644,6 @@ class App {
     setupXR() {
         this.renderer.xr.enabled = true;
 
-        // const XR = navigator.xr;
-
-if (XR) {
-    console.log("in xr")
   XR.requestSession("immersive-vr").then((xrSession) => {
 console.log ("in request")
     xrSession.addEventListener("select", this.changePosition.bind(this) );
@@ -666,10 +662,6 @@ console.log ("in request")
     //   });
     // });
   });
-} else {
-  /* WebXR is not available */
-}
-
         const button = new VRButton(this.renderer);
 
         const self = this;
