@@ -648,7 +648,7 @@ class App {
 
 
   XR.requestSession("immersive-vr").then((xrSession) => {
-      sessionStorage.requestSession("immersive-vr").then((xrSession) => {
+      session.requestSession("immersive-vr").then((xrSession) => {
 console.log ("in request")
     xrSession.addEventListener("onSelect", this.changePosition.bind(this) );
 
