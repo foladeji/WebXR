@@ -645,26 +645,22 @@ this.setupXR();
 
     
     initScene(){
-        this.room = new THREE.LineSegments(
-					new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
-					new THREE.LineBasicMaterial( { color: 0x808080 } )
-				);
-        this.room.geometry.translate( 0, 3, 0 );
-        this.scene.add( this.room );
+        // this.room = new THREE.LineSegments(
+		// 			new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
+		// 			new THREE.LineBasicMaterial( { color: 0x808080 } )
+		// 		);
+        // this.room.geometry.translate( 0, 3, 0 );
+        // this.scene.add( this.room );
         
         this.createUI();
     }
     
     createUI() {
-        const config = {
-            image: { type: "img", position: { left: 20, top: 20 }, width: 472 },
-            info: { type: "text", position: { top: 300 } }
-        }
-        const content = {
-            image: "../../assets/promo.png",
-            info: "The promo image from the course: Learn to create WebXR, VR and AR, experiences using Three.JS"
-        }
-        this.ui = new CanvasUI( content, config );
+        this.ui = new CanvasUI();
+        this.ui.updateElement ("body", "hello world");
+        this.ui.update();
+        this.ui.mesh.position.set(2, 3.5, 17);
+        this.scene.add(this.ui.mesh);
     }
     
     
