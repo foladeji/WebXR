@@ -644,7 +644,10 @@ class App {
     setupXR() {
         this.renderer.xr.enabled = true;
 
-  this.requestSession("immersive-vr").then((xrSession) => {
+        const XR = navigator.xr;
+
+
+  XR.requestSession("immersive-vr").then((xrSession) => {
 console.log ("in request")
     xrSession.addEventListener("select", this.changePosition.bind(this) );
 
@@ -662,6 +665,7 @@ console.log ("in request")
     //   });
     // });
   });
+
         const button = new VRButton(this.renderer);
 
         const self = this;
