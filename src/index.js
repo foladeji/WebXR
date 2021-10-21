@@ -665,7 +665,7 @@ console.log ("in request")
     //   });
     // });
   });
-
+    
         const button = new VRButton(this.renderer);
 
         const self = this;
