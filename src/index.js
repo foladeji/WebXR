@@ -659,7 +659,7 @@ this.setupXR();
         this.ui = new CanvasUI(  );
         this.ui.updateElement("body", "GALLERY" );
         this.ui.update();
-        this.ui.mesh.position.set( 0, -1, -1.2 );
+        this.ui.mesh.position.set( 0, -.8, -1.2 );
         this.scene.add( this.ui.mesh );
     }
     
