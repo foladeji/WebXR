@@ -46,49 +46,52 @@ class App {
         this.position = [
             //MAIN GALLERY
             new THREE.Vector3(2, 3.5, 17), 
-            // new THREE.Vector3(2, 3.5, -3), 
-            // new THREE.Vector3(-17,3.5,-3), 
-            // new THREE.Vector3(-17,3.5,17), 
+            new THREE.Vector3(2, 3.5, -3), 
+            new THREE.Vector3(-17,3.5,-3), 
+            new THREE.Vector3(-17,3.5,17), 
 
-            // //ENTRY VESTIBULE
-            // new THREE.Vector3(5.5,3.5,28),
-            // new THREE.Vector3(-20,3.5,-13),
+            //ENTRY VESTIBULE
+            new THREE.Vector3(5.5,3.5,28),
+            new THREE.Vector3(-20,3.5,-13),
 
-            // //STAFF OFFICE
-            // new THREE.Vector3(19,3.5,17),
+            //STAFF OFFICE
+            new THREE.Vector3(19,3.5,17),
 
-            // //PUBLIC RESTROOMS
-            // new THREE.Vector3(1,3.5,-25),
-            // new THREE.Vector3(25,3.5,2),
+            //PUBLIC RESTROOMS
+            new THREE.Vector3(1,3.5,-25),
+            new THREE.Vector3(25,3.5,2),
 
-            // //CUSTODIAN;S CLOSET W/ SINK
-            // new THREE.Vector3(4,3.5,-12),
+            //CUSTODIAN;S CLOSET W/ SINK
+            new THREE.Vector3(4,3.5,-12),
 
-            // //GALLERY STORAGE
-            // new THREE.Vector3(19,3.5,8.5),
+            //GALLERY STORAGE
+            new THREE.Vector3(19,3.5,8.5),
 
-            // //GENERAL FACILITY STORAGE
-            // new THREE.Vector3(-6,3.5,-13),
+            //GENERAL FACILITY STORAGE
+            new THREE.Vector3(-6,3.5,-13),
 
-            // //MECHNICAL ROOM
-            // new THREE.Vector3(16,3.5,-12),
+            //MECHNICAL ROOM
+            new THREE.Vector3(16,3.5,-12),
 
-            // //TERRACE 1
-            // new THREE.Vector3(-70,12,60),
+            //TERRACE 1
+            new THREE.Vector3(-70,12,60),
 
-            // //TERRACE 2
-            // new THREE.Vector3(-20,12,-95),
+            //TERRACE 2
+            new THREE.Vector3(-20,12,-95),
 
-            // //JAPAN HOUSE
-            // new THREE.Vector3(-520,12,85),
+            //JAPAN HOUSE
+            new THREE.Vector3(-520,12,85),
 
-            // //SOUTH ENTRY
-            // new THREE.Vector3(5,4.5,55),
+            //SOUTH ENTRY
+            new THREE.Vector3(5,4.5,55),
 
-            // //NORTH ENTRY
-            // new THREE.Vector3(-20,4.5,-30),
+            //NORTH ENTRY
+            new THREE.Vector3(-20,4.5,-30),
         
         ]
+
+
+        
         this.currentPosition = 0
         this.camera.position.copy (this.position[this.currentPosition])
         // this.camera.position.set(this.position[this.currentPosition].x,this.position[this.currentPosition].y,this.position[this.currentPosition].z )
@@ -659,7 +662,7 @@ this.setupXR();
         this.ui = new CanvasUI(  );
         this.ui.updateElement("body", "GALLERY" );
         this.ui.update();
-        this.ui.mesh.position.set( 0, -.6, -1.2 );
+        this.ui.mesh.position.set( 0, -.5, -1.2 );
         this.scene.add( this.ui.mesh );
     }
     
