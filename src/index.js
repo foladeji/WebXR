@@ -219,7 +219,7 @@ class App {
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
-        window.addEventListener('click', this.changePosition.bind(this));
+        window.addEventListener('select', this.changePosition.bind(this));
         // window.addEventListener('touch', this.changePosition.bind(this));
     
     }
