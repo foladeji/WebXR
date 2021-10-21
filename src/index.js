@@ -219,7 +219,7 @@ class App {
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
-        // window.addEventListener('click', this.changePosition.bind(this));
+        window.addEventListener('click', this.changePosition.bind(this));
         // window.addEventListener('touch', this.changePosition.bind(this));
     
     }
@@ -648,9 +648,9 @@ class App {
 
 if (XR) {
     console.log ("in xr")
-  XR.requestSession("immersive-vr").then((xrSession) => {
+    XR.requestSession("immersive-vr").then((xrSession) => {
 console.log ("in request")
-    xrSession.addEventListener("onSelect", this.changePosition.bind(this) );
+    xrSession.addEventListener("select", this.changePosition.bind(this) );
 
     // xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
     //   xrSession.requestAnimationFrame((time, xrFrame) => {
