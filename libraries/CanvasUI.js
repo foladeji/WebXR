@@ -10,7 +10,7 @@ import { Mesh,
         Quaternion,
         IcosahedronBufferGeometry 
        } from './three/three.module.js';
-import { CanvasKeyboard } from './CanvasKeyboard.js';
+import { CanvasKeyboard } from '../libraries/CanvasKeyboard.js';
 
 /*An element is defined by 
 type: text | button | image | shape

@@ -27,6 +27,7 @@ import {
 import {
     GazeController
 } from '../libraries/GazeController.js'
+import { BoxLineGeometry } from '../libraries/three/jsm/BoxLineGeometry.js';
 
 
 
@@ -202,6 +203,9 @@ class App {
 
 //        this.stats = new Stats();
 //		container.appendChild( this.stats.dom );
+
+this.initScene();
+this.setupXR();
 //        
         this.loadingBar = new LoadingBar();
         this.loadModels();
@@ -639,6 +643,32 @@ class App {
     }
 
 
+    
+    initScene(){
+        this.room = new THREE.LineSegments(
+					new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
+					new THREE.LineBasicMaterial( { color: 0x808080 } )
+				);
+        this.room.geometry.translate( 0, 3, 0 );
+        this.scene.add( this.room );
+        
+        this.createUI();
+    }
+    
+    createUI() {
+        const config = {
+            image: { type: "img", position: { left: 20, top: 20 }, width: 472 },
+            info: { type: "text", position: { top: 300 } }
+        }
+        const content = {
+            image: "../../assets/promo.png",
+            info: "The promo image from the course: Learn to create WebXR, VR and AR, experiences using Three.JS"
+        }
+        this.ui = new CanvasUI( content, config );
+    }
+    
+    
+    
 
     //XR FUNCTION
     setupXR() {
@@ -687,148 +717,122 @@ console.log ("in request")
         
     }
 
-    buildControllers(parent = this.scene) {
-        const controllerModelFactory = new XRControllerModelFactory();
+//     buildControllers(parent = this.scene) {
+//         const controllerModelFactory = new XRControllerModelFactory();
 
-        const geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
+//         const geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
 
-        const line = new THREE.Line(geometry);
-        line.scale.z = 0;
+//         const line = new THREE.Line(geometry);
+//         line.scale.z = 0;
 
-        const controllers = [];
+//         const controllers = [];
 
-        for (let i = 0; i <= 1; i++) {
-            const controller = this.renderer.xr.getController(i);
-            controller.add(line.clone());
-            controller.userData.selectPressed = false;
-            parent.add(controller);
-            controllers.push(controller);
+//         for (let i = 0; i <= 1; i++) {
+//             const controller = this.renderer.xr.getController(i);
+//             controller.add(line.clone());
+//             controller.userData.selectPressed = false;
+//             parent.add(controller);
+//             controllers.push(controller);
 
-            const grip = this.renderer.xr.getControllerGrip(i);
-            grip.add(controllerModelFactory.createControllerModel(grip));
-            parent.add(grip);
-        }
+//             const grip = this.renderer.xr.getControllerGrip(i);
+//             grip.add(controllerModelFactory.createControllerModel(grip));
+//             parent.add(grip);
+//         }
 
-        return controllers;
-    }
+//         return controllers;
+//     }
 
-    moveDolly(dt) {
-        if (this.proxy === undefined) return;
+//     moveDolly(dt) {
+//         if (this.proxy === undefined) return;
 
-        const wallLimit = 1.3;
-        const speed = 2;
-        let pos = this.dolly.position.clone();
-        pos.y += 1;
+//         const wallLimit = 1.3;
+//         const speed = 2;
+//         let pos = this.dolly.position.clone();
+//         pos.y += 1;
 
-        let dir = new THREE.Vector3();
-        //Store original dolly rotation
-        const quaternion = this.dolly.quaternion.clone();
-        //Get rotation for movement from the headset pose
- this.dolly.quaternion.copy(this.dummyCam.getWorldQuaternion(this.workingQuaternion));
-        this.dolly.getWorldDirection(dir);
-        dir.negate();
-        this.raycaster.set(pos, dir);
+//         let dir = new THREE.Vector3();
+//         //Store original dolly rotation
+//         const quaternion = this.dolly.quaternion.clone();
+//         //Get rotation for movement from the headset pose
+//  this.dolly.quaternion.copy(this.dummyCam.getWorldQuaternion(this.workingQuaternion));
+//         this.dolly.getWorldDirection(dir);
+//         dir.negate();
+//         this.raycaster.set(pos, dir);
 
-        let blocked = false;
+//         let blocked = false;
 
-        let intersect = this.raycaster.intersectObject(this.proxy);
-        if (intersect.length > 0) {
-            if (intersect[0].distance < wallLimit) blocked = true;
-        }
+//         let intersect = this.raycaster.intersectObject(this.proxy);
+//         if (intersect.length > 0) {
+//             if (intersect[0].distance < wallLimit) blocked = true;
+//         }
 
-        if (!blocked) {
-            this.dolly.translateZ(-dt * speed);
-            pos = this.dolly.getWorldPosition(this.origin);
-        }
+//         if (!blocked) {
+//             this.dolly.translateZ(-dt * speed);
+//             pos = this.dolly.getWorldPosition(this.origin);
+//         }
 
-        //cast left
-        dir.set(-1, 0, 0);
-        dir.applyMatrix4(this.dolly.matrix);
-        dir.normalize();
-        this.raycaster.set(pos, dir);
+//         //cast left
+//         dir.set(-1, 0, 0);
+//         dir.applyMatrix4(this.dolly.matrix);
+//         dir.normalize();
+//         this.raycaster.set(pos, dir);
 
-        intersect = this.raycaster.intersectObject(this.proxy);
-        if (intersect.length > 0) {
-            if (intersect[0].distance < wallLimit) this.dolly.translateX(wallLimit - intersect[0].distance);
-        }
+//         intersect = this.raycaster.intersectObject(this.proxy);
+//         if (intersect.length > 0) {
+//             if (intersect[0].distance < wallLimit) this.dolly.translateX(wallLimit - intersect[0].distance);
+//         }
 
-        //cast right
-        dir.set(1, 0, 0);
-        dir.applyMatrix4(this.dolly.matrix);
-        dir.normalize();
-        this.raycaster.set(pos, dir);
+//         //cast right
+//         dir.set(1, 0, 0);
+//         dir.applyMatrix4(this.dolly.matrix);
+//         dir.normalize();
+//         this.raycaster.set(pos, dir);
 
-        intersect = this.raycaster.intersectObject(this.proxy);
-        if (intersect.length > 0) {
-            if (intersect[0].distance < wallLimit) this.dolly.translateX(intersect[0].distance - wallLimit);
-        }
+//         intersect = this.raycaster.intersectObject(this.proxy);
+//         if (intersect.length > 0) {
+//             if (intersect[0].distance < wallLimit) this.dolly.translateX(intersect[0].distance - wallLimit);
+//         }
 
-        //cast down
-        dir.set(0, -1, 0);
-        pos.y += 1.5;
-        this.raycaster.set(pos, dir);
+//         //cast down
+//         dir.set(0, -1, 0);
+//         pos.y += 1.5;
+//         this.raycaster.set(pos, dir);
 
-        intersect = this.raycaster.intersectObject(this.proxy);
-        if (intersect.length > 0) {
-            this.dolly.position.copy(intersect[0].point);
-        }
+//         intersect = this.raycaster.intersectObject(this.proxy);
+//         if (intersect.length > 0) {
+//             this.dolly.position.copy(intersect[0].point);
+//         }
 
-        //Restore the original rotation
-        this.dolly.quaternion.copy(quaternion);
-    }
+//         //Restore the original rotation
+//         this.dolly.quaternion.copy(quaternion);
+//     }
 
-    get selectPressed() {
-        return (this.controllers !== undefined && (this.controllers[0].userData.selectPressed || this.controllers[1].userData.selectPressed));
-    }
-
-
-    render(timestamp, frame) {
-        const dt = this.clock.getDelta();
-
-        if (this.renderer.xr.isPresenting) {
-            let moveGaze = false;
-            
-            if (this.useGaze && this.gazeController !== undefined) {
-                this.gazeController.update();
-                moveGaze = (this.gazeController.mode == GazeController.Modes.MOVE);
-
-            }
-
-            if (this.selectPressed || moveGaze) {
-                this.moveDolly(dt);
-                if (this.boardData) {
-                    const scene = this.scene;
-                    const dollyPos = this.dolly.getWorldPosition(new THREE.Vector3());
-                    let boardFound = false;
-                    Object.entries(this.boardData).forEach(([name, info]) => {
-                        const obj = scene.getObjectByName(name);
-                        if (obj !== undefined) {
-                            const pos = obj.getWorldPosition(new THREE.Vector3());
-                            if (dollyPos.distanceTo(pos) < 3) {
-                                boardFound = true;
-                                if (this.boardShown !== name) this.showInfoboard(name, info, pos);
-                            }
-                        }
-                    });
-                    if (!boardFound) {
-                        this.boardShown = "";
-                        this.ui.visible = false;
-                    }
-                }
-            }
-        }
-
-        if (this.immersive != this.renderer.xr.isPresenting) {
-            this.resize();
-            this.immersive = this.renderer.xr.isPresenting;
-        }
-
-//this.stats.update();
-        this.renderer.render(this.scene, this.camera);
-    }
+//     get selectPressed() {
+//         return (this.controllers !== undefined && (this.controllers[0].userData.selectPressed || this.controllers[1].userData.selectPressed));
+//     }
 
 
+    render() {
+        
 
+//         if (this.immersive != this.renderer.xr.isPresenting) {
+//             this.resize();
+          
+//             this.immersive = this.renderer.xr.isPresenting;
+//         }
+
+        
+
+// //this.stats.update();
+//         this.renderer.render(this.scene, this.camera);
+//     }
+
+
+if (this.renderer.xr.isPresenting) this.ui.update();
+this.renderer.render(this.scene, this.camera);
+
+
+}
 }
 
 export {
