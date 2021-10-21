@@ -33,14 +33,14 @@ border: width color style
 class CanvasUI{
 	constructor(content, config){
         const defaultconfig = {
-            panelSize: { width: 1, height: 1},
+            panelSize: { width: 1, height: .16},
             width: 512,
-            height: 512,
+            height: 85,
             opacity: 0.7,
             body:{
                 fontFamily:'Arial', 
                 fontSize:30, 
-                padding:20, 
+                padding:40, 
                 backgroundColor: '#000', 
                 fontColor:'#fff', 
                 borderRadius: 6

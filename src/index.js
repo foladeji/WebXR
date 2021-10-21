@@ -46,47 +46,47 @@ class App {
         this.position = [
             //MAIN GALLERY
             new THREE.Vector3(2, 3.5, 17), 
-            new THREE.Vector3(2, 3.5, -3), 
-            new THREE.Vector3(-17,3.5,-3), 
-            new THREE.Vector3(-17,3.5,17), 
+            // new THREE.Vector3(2, 3.5, -3), 
+            // new THREE.Vector3(-17,3.5,-3), 
+            // new THREE.Vector3(-17,3.5,17), 
 
-            //ENTRY VESTIBULE
-            new THREE.Vector3(5.5,3.5,28),
-            new THREE.Vector3(-20,3.5,-13),
+            // //ENTRY VESTIBULE
+            // new THREE.Vector3(5.5,3.5,28),
+            // new THREE.Vector3(-20,3.5,-13),
 
-            //STAFF OFFICE
-            new THREE.Vector3(19,3.5,17),
+            // //STAFF OFFICE
+            // new THREE.Vector3(19,3.5,17),
 
-            //PUBLIC RESTROOMS
-            new THREE.Vector3(1,3.5,-25),
-            new THREE.Vector3(25,3.5,2),
+            // //PUBLIC RESTROOMS
+            // new THREE.Vector3(1,3.5,-25),
+            // new THREE.Vector3(25,3.5,2),
 
-            //CUSTODIAN;S CLOSET W/ SINK
-            new THREE.Vector3(4,3.5,-12),
+            // //CUSTODIAN;S CLOSET W/ SINK
+            // new THREE.Vector3(4,3.5,-12),
 
-            //GALLERY STORAGE
-            new THREE.Vector3(19,3.5,8.5),
+            // //GALLERY STORAGE
+            // new THREE.Vector3(19,3.5,8.5),
 
-            //GENERAL FACILITY STORAGE
-            new THREE.Vector3(-6,3.5,-13),
+            // //GENERAL FACILITY STORAGE
+            // new THREE.Vector3(-6,3.5,-13),
 
-            //MECHNICAL ROOM
-            new THREE.Vector3(16,3.5,-12),
+            // //MECHNICAL ROOM
+            // new THREE.Vector3(16,3.5,-12),
 
-            //TERRACE 1
-            new THREE.Vector3(-70,12,60),
+            // //TERRACE 1
+            // new THREE.Vector3(-70,12,60),
 
-            //TERRACE 2
-            new THREE.Vector3(-20,12,-95),
+            // //TERRACE 2
+            // new THREE.Vector3(-20,12,-95),
 
-            //JAPAN HOUSE
-            new THREE.Vector3(-520,12,85),
+            // //JAPAN HOUSE
+            // new THREE.Vector3(-520,12,85),
 
-            //SOUTH ENTRY
-            new THREE.Vector3(5,4.5,55),
+            // //SOUTH ENTRY
+            // new THREE.Vector3(5,4.5,55),
 
-            //NORTH ENTRY
-            new THREE.Vector3(-20,4.5,-30),
+            // //NORTH ENTRY
+            // new THREE.Vector3(-20,4.5,-30),
         
         ]
         this.currentPosition = 0
@@ -645,24 +645,23 @@ this.setupXR();
 
     
     initScene(){
-        // this.room = new THREE.LineSegments(
-		// 			new BoxLineGeometry( 6, 6, 6, 10, 10, 10 ),
-		// 			new THREE.LineBasicMaterial( { color: 0x808080 } )
-		// 		);
-        // this.room.geometry.translate( 0, 3, 0 );
-        // this.scene.add( this.room );
+        this.room = new THREE.LineSegments(
+					new BoxLineGeometry( 6, 6, 6, 6, 6, 6 ),
+					new THREE.LineBasicMaterial( { color: 0x808080 } )
+				);
+        this.room.geometry.translate( 0, 3, 0 );
+        this.scene.add( this.room );
         
         this.createUI();
     }
     
     createUI() {
-        this.ui = new CanvasUI();
-        this.ui.updateElement ("body", "hello world");
+        this.ui = new CanvasUI(  );
+        this.ui.updateElement("body", "GALLERY" );
         this.ui.update();
-        this.ui.mesh.position.set(2, 3.5, 17);
-        this.scene.add(this.ui.mesh);
+        this.ui.mesh.position.set( 0, -1, -1.2 );
+        this.scene.add( this.ui.mesh );
     }
-    
     
     
 
@@ -678,34 +677,21 @@ if (XR) {
 console.log ("in request")
     xrSession.addEventListener("select", this.changePosition.bind(this) );
 
-    // xrSession.requestReferenceSpace("local").then((xrReferenceSpace) => {
-    //   xrSession.requestAnimationFrame((time, xrFrame) => {
-    //     let viewer = xrFrame.getViewerPose(xrReferenceSpace);
-
-    //     gl.bindFramebuffer(xrWebGLLayer.framebuffer);
-
-    //     for (xrView of viewer.views) {
-    //       let xrViewport = xrWebGLLayer.getViewport(xrView);
-    //       gl.viewport(xrViewport.x, xrViewport.y,
-    //                   xrViewport.width, xrViewport.height);
-    //     }
-    //   });
-    // });
   });
 } else {
     /* WebXR is not available */
   }
-        const button = new VRButton(this.renderer);
+        const button = new VRButton(this.renderer, { onSessionStart, onSessionEnd });
 
         const self = this;
 
-        function onSelectStart(event) {
-            this.userData.selectPressed = true;
-        
+        function onSessionStart(){
+            // self.ui.mesh.position.set( 0, 1, 3);
+            self.camera.add( self.ui.mesh );
         }
 
-        function onSelectEnd(event) {
-            this.userData.selectPressed = false;
+        function onSessionEnd(){
+            self.camera.remove( self.ui.mesh );
         }
 
      
@@ -713,115 +699,10 @@ console.log ("in request")
         
     }
 
-//     buildControllers(parent = this.scene) {
-//         const controllerModelFactory = new XRControllerModelFactory();
-
-//         const geometry = new THREE.BufferGeometry().setFromPoints([new THREE.Vector3(0, 0, 0), new THREE.Vector3(0, 0, -1)]);
-
-//         const line = new THREE.Line(geometry);
-//         line.scale.z = 0;
-
-//         const controllers = [];
-
-//         for (let i = 0; i <= 1; i++) {
-//             const controller = this.renderer.xr.getController(i);
-//             controller.add(line.clone());
-//             controller.userData.selectPressed = false;
-//             parent.add(controller);
-//             controllers.push(controller);
-
-//             const grip = this.renderer.xr.getControllerGrip(i);
-//             grip.add(controllerModelFactory.createControllerModel(grip));
-//             parent.add(grip);
-//         }
-
-//         return controllers;
-//     }
-
-//     moveDolly(dt) {
-//         if (this.proxy === undefined) return;
-
-//         const wallLimit = 1.3;
-//         const speed = 2;
-//         let pos = this.dolly.position.clone();
-//         pos.y += 1;
-
-//         let dir = new THREE.Vector3();
-//         //Store original dolly rotation
-//         const quaternion = this.dolly.quaternion.clone();
-//         //Get rotation for movement from the headset pose
-//  this.dolly.quaternion.copy(this.dummyCam.getWorldQuaternion(this.workingQuaternion));
-//         this.dolly.getWorldDirection(dir);
-//         dir.negate();
-//         this.raycaster.set(pos, dir);
-
-//         let blocked = false;
-
-//         let intersect = this.raycaster.intersectObject(this.proxy);
-//         if (intersect.length > 0) {
-//             if (intersect[0].distance < wallLimit) blocked = true;
-//         }
-
-//         if (!blocked) {
-//             this.dolly.translateZ(-dt * speed);
-//             pos = this.dolly.getWorldPosition(this.origin);
-//         }
-
-//         //cast left
-//         dir.set(-1, 0, 0);
-//         dir.applyMatrix4(this.dolly.matrix);
-//         dir.normalize();
-//         this.raycaster.set(pos, dir);
-
-//         intersect = this.raycaster.intersectObject(this.proxy);
-//         if (intersect.length > 0) {
-//             if (intersect[0].distance < wallLimit) this.dolly.translateX(wallLimit - intersect[0].distance);
-//         }
-
-//         //cast right
-//         dir.set(1, 0, 0);
-//         dir.applyMatrix4(this.dolly.matrix);
-//         dir.normalize();
-//         this.raycaster.set(pos, dir);
-
-//         intersect = this.raycaster.intersectObject(this.proxy);
-//         if (intersect.length > 0) {
-//             if (intersect[0].distance < wallLimit) this.dolly.translateX(intersect[0].distance - wallLimit);
-//         }
-
-//         //cast down
-//         dir.set(0, -1, 0);
-//         pos.y += 1.5;
-//         this.raycaster.set(pos, dir);
-
-//         intersect = this.raycaster.intersectObject(this.proxy);
-//         if (intersect.length > 0) {
-//             this.dolly.position.copy(intersect[0].point);
-//         }
-
-//         //Restore the original rotation
-//         this.dolly.quaternion.copy(quaternion);
-//     }
-
-//     get selectPressed() {
-//         return (this.controllers !== undefined && (this.controllers[0].userData.selectPressed || this.controllers[1].userData.selectPressed));
-//     }
-
 
     render() {
         
 
-//         if (this.immersive != this.renderer.xr.isPresenting) {
-//             this.resize();
-          
-//             this.immersive = this.renderer.xr.isPresenting;
-//         }
-
-        
-
-// //this.stats.update();
-//         this.renderer.render(this.scene, this.camera);
-//     }
 
 
 if (this.renderer.xr.isPresenting) this.ui.update();
