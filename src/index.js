@@ -238,11 +238,11 @@ this.setupXR();
             this.currentPosition += 1
             this.dolly.position.set(0, 1.6, 0);
             if (this.currentPosition < this.position.length){
-                this.dolly.position.copy (this.position[this.currentPosition])
+                this.scene.children[0].position.copy (this.position[this.currentPosition])
 
             }else{
                 this.currentPosition = 0;
-                this.dolly.position.copy (this.position[this.currentPosition])
+                this.scene.children[0].position.copy (this.position[this.currentPosition])
             }
         }else{
             if (this.currentPosition < this.position.length){
@@ -704,10 +704,7 @@ console.log ("in request")
     }
 
 
-    render() {
-        
-
-
+render() {
 
 if (this.renderer.xr.isPresenting) this.ui.update();
 this.renderer.render(this.scene, this.camera);
