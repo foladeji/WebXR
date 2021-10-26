@@ -233,8 +233,9 @@ this.setupXR();
 
     changePosition(){
         
-        this.currentPosition += 1
+        // this.currentPosition += 1
         if (this.renderer.xr.enabled){
+            this.currentPosition += 1
             this.dolly.position.set(0, 1.6, 0);
             if (this.currentPosition < this.position.length){
                 this.dolly.position.copy (this.position[this.currentPosition])
