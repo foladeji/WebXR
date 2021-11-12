@@ -102,7 +102,7 @@ class App {
         console.log(this.camera.position)
 
         this.dolly = new THREE.Object3D();
-        this.dolly.position.set(-20 , 4.5, -30);
+        this.dolly.position.set(2, 3.5, 17);
         this.dolly.add(this.camera);
         this.dummyCam = new THREE.Object3D();
         this.camera.add(this.dummyCam);
@@ -226,7 +226,7 @@ this.setupXR();
         this.workingQuaternion = new THREE.Quaternion();
         this.raycaster = new THREE.Raycaster();
 
-        window.addEventListener('click', this.changePosition.bind(this));
+        // window.addEventListener('click', this.changePosition.bind(this));
         // window.addEventListener('touch', this.changePosition.bind(this));
     
     }
